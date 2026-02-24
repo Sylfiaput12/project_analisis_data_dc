@@ -459,7 +459,7 @@ ax.set_title("Top 5 Customers by Monetary", fontsize=16)
 ax.set_xlabel("Total Spending", fontsize=16)
 ax.set_ylabel("Customer ID", fontsize=16)
 
-st.pyplot(fig, use_container_width=False)
+st.pyplot(fig, use_container_width=True)
 
 # visualisasi top 5 high-frequency customers berdasarkan frequency
 
@@ -474,6 +474,6 @@ ax.set_title("Top 5 Customers by Frequency", fontsize=16)
 ax.set_xlabel("Total Orders", fontsize=16)
 ax.set_ylabel("Customer ID")
 
-st.pyplot(fig, use_container_width=False)
+st.pyplot(fig)
 
 st.caption("Copyright (c) Sylfia Putri 2026 ")
