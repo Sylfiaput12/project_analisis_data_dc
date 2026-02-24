@@ -318,6 +318,7 @@ sns.barplot(
 ax[0].set_xlabel("Average Review Score", fontsize=16)
 ax[0].set_title("Best Performing Categories by Review Score", fontsize=20)
 ax[0].set_ylabel("")
+ax[0].set_xlim(0, 5)
 
 # Worst Performing Category by review score
 bottom_review_score_df = review_score_df.sort_values(
@@ -334,7 +335,9 @@ sns.barplot(
 ax[1].set_xlabel("Average Review Score", fontsize=16)
 ax[1].set_ylabel("")
 ax[1].set_title("Worst Performing Categories by Review Score", fontsize=20)
-plt.tight_layout()
+ax[1].set_xlim(0, 5)
+
+plt.subplots_adjust(wspace=0.5)
 st.pyplot(fig)
 
 # visualisasi jumlah order berdasarkan rating
