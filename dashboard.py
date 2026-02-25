@@ -8,7 +8,7 @@ sns.set(style="dark")
 
 st.set_page_config(page_title="E-Commerce Dashboard", layout="wide")
 
-st.title("📊 E-Commerce Sales Dashboard")
+st.title("📊 E-Commerce Dashboard")
 
 
 def create_daily_orders_df(df):
@@ -387,64 +387,17 @@ st.pyplot(fig)
 # visualisasi analisis RFM
 st.subheader("Best Customer Based on RFM Parameters")
 
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    avg_recency = round(rfm_df["recency"].mean(), 1)
-    st.metric("Average Recency (days)", value=avg_recency)
-
-with col2:
-    avg_frequency = round(rfm_df["frequency"].mean(), 2)
-    st.metric("Average Frequency", value=avg_frequency)
-
-with col3:
-    avg_monetary = f"${rfm_df['monetary'].sum():,.2f}"
-    # avg_monetary = format_currency(rfm_df["monetary"].mean(),"USD", locale="es_CO")
-    st.metric("Average Monetary", value=avg_monetary)
-
-fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(20, 5))
-colors = ["#90CAF9", "#90CAF9", "#90CAF9", "#90CAF9", "#90CAF9"]
-
+# visualisasi top 5 high-recency customers berdasarkan recency
+st.subheader("Top 5 High-Recency Customers")
+top_recency = rfm_df.sort_values("recency", ascending=False).head(5)
+fig, ax = plt.subplots(figsize=(10, 3))
 sns.barplot(
-    y="recency",
-    x="customer_unique_id",
-    data=rfm_df.sort_values(by="recency", ascending=False).head(5),
-    palette=colors,
-    ax=ax[0],
+    x="recency", y="customer_unique_id", data=top_recency, palette="magma", ax=ax
 )
-ax[0].set_ylabel(None)
-ax[0].set_xlabel("customer_unique_id", fontsize=16)
-ax[0].set_title("By Recency (days)", loc="center", fontsize=20)
-ax[0].tick_params(axis="y", labelsize=16)
-ax[0].tick_params(axis="x", labelsize=3)
-
-sns.barplot(
-    y="frequency",
-    x="customer_unique_id",
-    data=rfm_df.sort_values(by="frequency", ascending=False).head(5),
-    palette=colors,
-    ax=ax[1],
-)
-ax[1].set_ylabel(None)
-ax[1].set_xlabel("customer_unique_id", fontsize=16)
-ax[1].set_title("By Frequency", loc="center", fontsize=20)
-ax[1].tick_params(axis="y", labelsize=16)
-ax[1].tick_params(axis="x", labelsize=3)
-
-sns.barplot(
-    y="monetary",
-    x="customer_unique_id",
-    data=rfm_df.sort_values(by="monetary", ascending=False).head(5),
-    palette=colors,
-    ax=ax[2],
-)
-ax[2].set_ylabel(None)
-ax[2].set_xlabel("customer_unique_id", fontsize=16)
-ax[2].set_title("By Monetary", loc="center", fontsize=20)
-ax[2].tick_params(axis="y", labelsize=16)
-ax[2].tick_params(axis="x", labelsize=3)
-
-st.pyplot(fig)
+ax.set_title("Top 5 Customers by Recency", fontsize=16)
+ax.set_xlabel("Recency (days)", fontsize=16)
+ax.set_ylabel("Customer ID", fontsize=16)
+st.pyplot(fig, use_container_width=True)
 
 
 # visualisasi top 5 high-value customers berdasarkan monetary
@@ -465,7 +418,7 @@ ax.set_ylabel("Customer ID", fontsize=16)
 st.pyplot(fig, use_container_width=True)
 
 # visualisasi top 5 high-frequency customers berdasarkan frequency
-
+st.subheader("Top 5 High-Frequency Customers")
 top_orders = rfm_df.sort_values("frequency", ascending=False).head(5)
 fig, ax = plt.subplots(figsize=(10, 3))
 
